@@ -5,7 +5,7 @@ data "aws_ami" "rhel9-ami-latest" {
 
   filter {
     name   = "name"
-    values = ["amazon/RHEL-9.4.*_HVM*"]
+    values = ["RHEL-9.4.*_HVM*"]
   }
 
   filter {
