@@ -23,4 +23,9 @@ output "connect_to_ec2_via_ssh" {
   value       = "ssh ec2-user@${aws_instance.tfe_podman_instance.public_dns}"
 }
 
+output "tfe-podman-fqdn" {
+  description = "tfe-fqdn"
+  value = var.my_tfe_dns_record
+  
+}
 
