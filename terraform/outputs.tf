@@ -25,7 +25,18 @@ output "connect_to_ec2_via_ssh" {
 
 output "tfe-podman-fqdn" {
   description = "tfe-fqdn"
-  value = var.my_tfe_dns_record
-  
+  value       = var.my_tfe_dns_record
+
+}
+
+output "see-private-key-test" {
+  value = tls_private_key.rsa-4096.private_key_pem
+  sensitive = true
+
+}
+
+output "see-cert-pem-test" {
+  value = acme_certificate.stam_podman.certificate_pem
+
 }
 

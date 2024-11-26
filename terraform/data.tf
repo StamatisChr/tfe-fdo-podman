@@ -16,3 +16,8 @@ data "aws_ami" "rhel9-ami-latest" {
 
 data "aws_vpc" "my-default" {}
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone
+data "aws_route53_zone" "my_aws_dns_zone" {
+  name = var.my_hosted_zone_name
+
+}
