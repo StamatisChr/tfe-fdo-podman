@@ -13,12 +13,12 @@ variable "my_key_name" {
   type        = string
 }
 
-variable "my_hosted_zone_name" {
+variable "hosted_zone_name" {
   description = "The zone ID of my doormat hosted route53 zone"
   type        = string
 }
 
-variable "my_tfe_dns_record" {
+variable "tfe_dns_record" {
   description = "The dns record of my TFE instance"
   type        = string
 }
@@ -72,5 +72,16 @@ variable "tfe_host_path_to_data" {
 
 variable "host_path_tfe_files" {
   description = "The path on the host machine to store tfe files like deployment.yml, certs, etc"
+  type        = string
+}
+
+variable "lets_encrypt_cert" {
+  description = "value"
+  type        = string
+
+}
+
+variable "lets_encrypt_key" {
+  description = "value"
   type        = string
 }

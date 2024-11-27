@@ -25,10 +25,6 @@ output "connect_to_ec2_via_ssh" {
 
 output "tfe-podman-fqdn" {
   description = "tfe-fqdn"
-  value       = var.my_tfe_dns_record
+  value       = "${var.tfe_dns_record}.${var.hosted_zone_name}"
 
-}
-
-output "s3-arn" {
-  value = aws_s3_bucket.stam-podman-s3.arn
 }
