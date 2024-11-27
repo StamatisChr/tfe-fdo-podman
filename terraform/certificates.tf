@@ -1,6 +1,5 @@
 resource "acme_registration" "reg" {
-  account_key_pem = tls_private_key.rsa-4096.private_key_pem
-  email_address   = var.certificate_email
+  email_address = var.certificate_email
 }
 
 resource "acme_certificate" "stam_podman" {

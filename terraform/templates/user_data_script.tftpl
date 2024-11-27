@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 dnf install -y container-tools awscli2 
 systemctl enable --now podman.socket
 mkdir -p ${tfe_host_path_to_certificates}

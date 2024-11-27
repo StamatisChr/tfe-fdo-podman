@@ -29,17 +29,6 @@ output "tfe-podman-fqdn" {
 
 }
 
-output "see-private-key-test" {
-  value     = tls_private_key.rsa-4096.private_key_pem
-  sensitive = true
-
-}
-
-output "see-cert-pem-test" {
-  value = acme_certificate.stam_podman.certificate_pem
-
-}
-
 output "s3-arn" {
   value = aws_s3_bucket.stam-podman-s3.arn
 }

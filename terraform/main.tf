@@ -5,6 +5,7 @@ resource "aws_instance" "tfe_podman_instance" {
   instance_type   = var.tfe_instance_type
   key_name        = var.my_key_name # the key is region specific
   security_groups = [aws_security_group.tfe_podman_sg.name]
+  user_data       = file("./files/user-data.sh")
   ebs_optimized   = true
   root_block_device {
     volume_size = 120
@@ -18,6 +19,8 @@ resource "aws_instance" "tfe_podman_instance" {
     Name        = "stam-tfe-podman-instance"
     Environment = "stam-podman"
   }
+
+  depends_on = [ local_file.user_data_script  ]
 
 }
 
@@ -150,15 +153,15 @@ resource "aws_iam_role_policy_attachment" "attach_s3_policy_to_role" {
 
 
 #https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key
-resource "tls_private_key" "rsa-4096" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
+# resource "tls_private_key" "rsa-4096" {
+#   algorithm = "RSA"
+#   rsa_bits  = 4096
+# }
 
 
 resource "local_file" "private_key" {
-  content  = tls_private_key.rsa-4096.private_key_pem
-  filename = "./files/key.pem"
+  content  = acme_certificate.stam_podman.private_key_pem
+  filename = "./files/key.pem" 
 }
 
 resource "aws_s3_object" "private_key_pem" {
@@ -166,8 +169,7 @@ resource "aws_s3_object" "private_key_pem" {
   key    = "key.pem"
   source = "./files/key.pem"
 
-  depends_on = [local_file.private_key]
-
+  depends_on = [ local_file.private_key ]
 }
 
 resource "local_file" "certificate" {
@@ -180,7 +182,7 @@ resource "aws_s3_object" "certificate_pem" {
   key    = "cert.pem"
   source = "./files/cert.pem"
 
-  depends_on = [local_file.certificate]
+depends_on = [ local_file.certificate ]
 }
 
 resource "aws_s3_object" "bundle_pem" {
@@ -188,12 +190,13 @@ resource "aws_s3_object" "bundle_pem" {
   key    = "bundle.pem"
   source = "./files/cert.pem"
 
-  depends_on = [local_file.certificate]
+  depends_on = [ local_file.certificate ]
+
 }
 
 resource "local_file" "tfe_podman_yml" {
   filename = "./files/deployment.yml"
-  content = templatefile("./files/deployment.tftpl", {
+  content = templatefile("./templates/deployment.tftpl", {
     my_tfe_dns_record             = var.my_tfe_dns_record
     tfe_operational_mode          = var.tfe_operational_mode
     tfe_license                   = var.tfe_license
@@ -217,7 +220,7 @@ resource "aws_s3_object" "tfe_podman_yml" {
 
 resource "local_file" "user_data_script" {
   filename = "./files/user-data.sh"
-  content = templatefile("./files/user_data_script.tftpl", {
+  content = templatefile("./templates/user_data_script.tftpl", {
     aws_s3_bucket-stam-podman-s3-bucket = aws_s3_bucket.stam-podman-s3.bucket
     tfe_host_path_to_certificates       = var.tfe_host_path_to_certificates
     tfe_host_path_to_data               = var.tfe_host_path_to_data
