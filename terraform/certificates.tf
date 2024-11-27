@@ -18,7 +18,7 @@ resource "acme_certificate" "stam_podman" {
     }
   }
 
-  depends_on = [ aws_route53_record.tfe-a-record ]
+  depends_on = [aws_route53_record.tfe-a-record]
 
 }
 

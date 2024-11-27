@@ -21,3 +21,4 @@ data "aws_route53_zone" "my_aws_dns_zone" {
   name = var.my_hosted_zone_name
 
 }
+

@@ -1,0 +1,17 @@
+#! /bin/bash
+dnf install -y container-tools awscli2 
+systemctl enable --now podman.socket
+mkdir -p ${tfe_host_path_to_certificates}
+mkdir -p ${tfe_host_path_to_data}
+
+aws s3 cp s3://${aws_s3_bucket-stam-podman-s3-bucket}/key.pem ${tfe_host_path_to_certificates}/key.pem
+aws s3 cp s3://${aws_s3_bucket-stam-podman-s3-bucket}/bundle.pem ${tfe_host_path_to_certificates}/bundle.pem
+aws s3 cp s3://${aws_s3_bucket-stam-podman-s3-bucket}/cert.pem ${tfe_host_path_to_certificates}/cert.pem
+
+aws s3 cp s3://${aws_s3_bucket-stam-podman-s3-bucket}/deployment.yml ${host_path_tfe_files}/deployment.yml
+
+echo "${tfe_license}" | podman login --username terraform images.releases.hashicorp.com --password-stdin
+
+podman pull images.releases.hashicorp.com/hashicorp/terraform-enterprise:${tfe_version_image}
+podman play kube ${host_path_tfe_files}/deployment.yml
+
