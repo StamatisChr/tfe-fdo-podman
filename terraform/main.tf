@@ -7,7 +7,6 @@ resource "aws_instance" "tfe_podman_instance" {
   security_groups = [aws_security_group.tfe_podman_sg.name]
 
   user_data = templatefile("./templates/user_data_script.tftpl", {
-    # aws_s3_bucket-stam-podman-s3-bucket = aws_s3_bucket.stam-podman-s3.bucket
     tfe_host_path_to_certificates = var.tfe_host_path_to_certificates
     tfe_host_path_to_data         = var.tfe_host_path_to_data
     host_path_tfe_files           = var.host_path_tfe_files
@@ -33,8 +32,6 @@ resource "aws_instance" "tfe_podman_instance" {
     volume_type = "gp3"
 
   }
-
-  # iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
 
   tags = {
     Name        = "stam-tfe-podman-instance"
