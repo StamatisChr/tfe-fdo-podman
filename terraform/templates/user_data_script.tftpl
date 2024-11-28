@@ -15,7 +15,7 @@ podman run --rm -it -p 80:80 -v "${tfe_host_path_to_certificates}:/etc/letsencry
 
 
 #generate the deployment yaml
-cat <<EOF > ${host_path_tfe_files}/deployment.yml
+cat <<EOF > /etc/containers/systemd/deployment.yml
 apiVersion: "v1"
 kind: "Pod"
 metadata:
@@ -106,7 +106,24 @@ spec:
       claimName: "terraform-enterprise_terraform-enterprise-cache"
 EOF
 
+#Log in to the Terraform Enterprise container image registry and pull the image
 echo "${tfe_license}" | podman login --username terraform images.releases.hashicorp.com --password-stdin
-
 podman pull images.releases.hashicorp.com/hashicorp/terraform-enterprise:${tfe_version_image}
-podman play kube ${host_path_tfe_files}/deployment.yml
+
+#gerenate the Quadlet unit file for the Terraform Enterprise pod and container 
+cat <<EOF > /etc/containers/systemd/terraform-enterprise.kube
+[Install]
+# Start by default on boot
+WantedBy=default.target
+[Service]
+Restart=always
+[Kube]
+Yaml=deployment.yml
+
+EOF
+
+# Reload the systemd daemon and start the service
+# For podman quadlet you do not need to enable the service, to make it start on system boot
+# https://www.redhat.com/en/blog/quadlet-podman
+systemctl daemon-reload
+systemctl start terraform-enterprise.service
