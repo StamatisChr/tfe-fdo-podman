@@ -40,6 +40,9 @@ resource "aws_instance" "tfe_podman_instance" {
   }
 }
 
+resource "aws_eip" "tfe_eip" {
+  instance = aws_instance.tfe_podman_instance.id
+}
 #### EC2 security group ######
 # Security group for TFE Podman. Ports needed: https://developer.hashicorp.com/terraform/enterprise/deploy/configuration/network
 resource "aws_security_group" "tfe_podman_sg" {
@@ -89,5 +92,5 @@ resource "aws_route53_record" "tfe-a-record" {
   name    = "${var.tfe_dns_record}-${random_pet.hostname_suffix.id}.${var.hosted_zone_name}"
   type    = "A"
   ttl     = 120
-  records = [aws_instance.tfe_podman_instance.public_ip]
+  records = [aws_eip.tfe_eip.public_ip]
 }
