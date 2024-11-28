@@ -23,11 +23,6 @@ variable "tfe_dns_record" {
   type        = string
 }
 
-variable "certificate_email" {
-  description = "The email used for the ACME registration"
-  type        = string
-}
-
 ####
 
 variable "tfe_operational_mode" {
@@ -67,11 +62,6 @@ variable "tfe_host_path_to_certificates" {
 
 variable "tfe_host_path_to_data" {
   description = "The path on the host machine to store tfe data"
-  type        = string
-}
-
-variable "host_path_tfe_files" {
-  description = "The path on the host machine to store tfe files like deployment.yml, certs, etc"
   type        = string
 }
 

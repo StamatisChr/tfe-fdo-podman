@@ -1,9 +1,8 @@
 #!/bin/bash
 dnf install -y container-tools awscli2 
 systemctl enable --now podman.socket
-mkdir ${host_path_tfe_files}
-mkdir ${tfe_host_path_to_certificates}
-mkdir ${tfe_host_path_to_data}
+mkdir -p ${tfe_host_path_to_certificates}
+mkdir -p ${tfe_host_path_to_data}
 
 # spawn a certbot container to generate the TLS certificates
 # let's encrypt | tfe 
