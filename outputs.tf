@@ -20,6 +20,6 @@ output "connect_to_ec2_via_ssh" {
 
 output "tfe-podman-fqdn" {
   description = "tfe-fqdn"
-  value       = "${var.tfe_dns_record}.${var.hosted_zone_name}"
+  value       = "${var.tfe_dns_record}-${random_pet.hostname_suffix.id}.${var.hosted_zone_name}"
 
 }

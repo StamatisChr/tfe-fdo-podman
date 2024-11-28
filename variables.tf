@@ -23,13 +23,6 @@ variable "tfe_dns_record" {
   type        = string
 }
 
-####
-
-variable "tfe_operational_mode" {
-  description = "TFE operational mode, it could be disk, external, active-active"
-  type        = string
-}
-
 variable "tfe_license" {
   description = "your TFE license string"
   type        = string
