@@ -2,15 +2,13 @@
 
 ## What is this guide about?
 
-Use this guide to spawn an AWS EC2 instance with operating system RHEL 9.4, Terraform Enterprise FDO Podman with operational type disk with let’s encrypt certificates.
+This guide is to have Terraform Enterprise running with Podman.
 
 ## Prerequisites 
 
 - Account on AWS Cloud
 
 - AWS IAM user with permissions to use AWS EC2 and AWS Route53
-
-- AWS cli installed and configured
 
 - SSH key pair on AWS 
 
@@ -24,8 +22,19 @@ Use this guide to spawn an AWS EC2 instance with operating system RHEL 9.4, Terr
 
 ## Create the AWS resources and start TFE
 
+Export your AWS access key and secret access key as environment variables:
+```
+export AWS_ACCESS_KEY_ID=<your_access_key_id>
+```
 
-To clone the repository to your computer, open your cli and run:
+```
+export AWS_SECRET_ACCESS_KEY=<your_secret_key>
+```
+
+
+Clone the repository to your computer.
+
+Open your cli and run:
 ```
 git clone git@github.com:StamatisChr/install-TFE-with-podman.git
 ```
@@ -40,7 +49,7 @@ Here you need to create a `variables.auto.tfvars` file with your specifications.
 
 Rename the example file:
 ```
-mv variables.auto.tfvars.example variables.auto.tfvars
+cp variables.auto.tfvars.example variables.auto.tfvars
 ```
 Edit the file:
 ```
