@@ -6,3 +6,5 @@ Then run the commands bellow and visit the URL to setup the admin user.
 export TFETOKEN=$(ssh ec2-user@${tfe_hostname} sudo podman exec -it terraform-enterprise-terraform-enterprise tfectl admin token)
 echo "https://${tfe_hostname}/admin/account/new?token=$TFETOKEN"
 
+Copy the echo command output and paste it on your browser.
+

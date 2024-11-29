@@ -47,6 +47,30 @@ Edit the file:
 vim variables.auto.tfvars
 ```
 
+```
+# example tfvars file
+# do not change the variable names on the left column
+# replace only the values in the "< >" placeholders
+
+aws_region                    = "<aws_region>"            # Set here your desired AWS region, example: eu-west-1
+tfe_instance_type             = "<aws_ec2_instance_type>" # Set here the EC2 instance type only architecture x86_64 is supported, example: m5.xlarge
+my_key_name                   = "<aws_ssh_key_name>"      # the AWS SSH key name  (region specific, it should exist in the same AWS region as the one set above)
+hosted_zone_name              = "<dns_zone_name>"         # your AWS route53 DNS zone name
+tfe_dns_record                = "<tfe_host_record>"       # the host record for your TFE instance on your dns zone, example: my-tfe
+tfe_license                   = "<tfe_license_string>"    # TFE license string
+tfe_encryption_password       = "<type_a_password>"       # TFE encryption paasowrd
+tfe_version_image             = "<tfe_version>"           # desired TFE version for podman, example: v202410-1
+
+#do not change the values bellow
+tfe_host_path_to_certificates = "/etc/terraform-enterprise/certs"
+tfe_host_path_to_data         = "/etc/terraform-enterprise/data"
+lets_encrypt_cert             = "fullchain1.pem"
+lets_encrypt_key              = "privkey1.pem"
+tfe_http_port                 = 8080
+tfe_https_port                = 8443
+```
+
+
 To populate the file according to the file comments and save.
 
 Initialize terraform, run:
@@ -69,6 +93,7 @@ Do you want to perform these actions?
   Enter a value: 
 ```
 Wait until you see the apply completed message and the output values. 
+
 Example:
 ```
 Apply complete! Resources: 9 added, 0 changed, 0 destroyed.
@@ -86,6 +111,7 @@ Then run the commands bellow and visit the URL to setup the admin user.
 export TFETOKEN=$(ssh ec2-user@tfe-podman-sole.stamatios-chrysinas.sbx.hashidemos.io sudo podman exec -it terraform-enterprise-terraform-enterprise tfectl admin token)
 echo "https://tfe-podman-sole.stamatios-chrysinas.sbx.hashidemos.io/admin/account/new?token=$TFETOKEN"
 
+Copy the echo command output and paste it on your browser.
 
 EOT
 rhel9_ami_id = "ami-0c44debc472ede5ff"
