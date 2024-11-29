@@ -60,14 +60,6 @@ tfe_dns_record                = "<tfe_host_record>"       # the host record for 
 tfe_license                   = "<tfe_license_string>"    # TFE license string
 tfe_encryption_password       = "<type_a_password>"       # TFE encryption paasowrd
 tfe_version_image             = "<tfe_version>"           # desired TFE version for podman, example: v202410-1
-
-#do not change the values bellow
-tfe_host_path_to_certificates = "/etc/terraform-enterprise/certs"
-tfe_host_path_to_data         = "/etc/terraform-enterprise/data"
-lets_encrypt_cert             = "fullchain1.pem"
-lets_encrypt_key              = "privkey1.pem"
-tfe_http_port                 = 8080
-tfe_https_port                = 8443
 ```
 
 

@@ -31,11 +31,13 @@ variable "tfe_license" {
 variable "tfe_http_port" {
   description = "TFE container http port"
   type        = number
+  default     = 8080
 }
 
 variable "tfe_https_port" {
   description = "TFE container https port"
   type        = number
+  default     = 8443
 }
 
 variable "tfe_encryption_password" {
@@ -51,20 +53,24 @@ variable "tfe_version_image" {
 variable "tfe_host_path_to_certificates" {
   description = "The path on the host machine to store the certificate files"
   type        = string
+  default     = "/etc/terraform-enterprise/certs"
 }
 
 variable "tfe_host_path_to_data" {
   description = "The path on the host machine to store tfe data"
   type        = string
+  default     = "/etc/terraform-enterprise/data"
 }
 
 variable "lets_encrypt_cert" {
   description = "value"
   type        = string
+  default     = "fullchain1.pem"
 
 }
 
 variable "lets_encrypt_key" {
   description = "value"
   type        = string
+  default     = "privkey1.pem"
 }
