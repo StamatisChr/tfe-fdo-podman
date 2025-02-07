@@ -13,7 +13,7 @@ resource "aws_instance" "tfe_podman_instance" {
   key_name        = var.my_key_name # the key is region specific
   security_groups = [aws_security_group.tfe_podman_sg.name]
 
-  user_data = templatefile("./templates/user_data_script.tftpl", {
+  user_data = templatefile("./templates/user_data_cloud_init.tftpl", {
     tfe_host_path_to_certificates = var.tfe_host_path_to_certificates
     tfe_host_path_to_data         = var.tfe_host_path_to_data
     tfe_license                   = var.tfe_license
