@@ -2,8 +2,6 @@
 package_update: true
 packages:
   - container-tools
-
-
 write_files:
   - path: /etc/containers/systemd/deployment.yml
     content: |
@@ -95,7 +93,6 @@ write_files:
         - name: "terraform-enterprise_terraform-enterprise-cache-pvc"
           persistentVolumeClaim:
             claimName: "terraform-enterprise_terraform-enterprise-cache"
-
   - path: /etc/containers/systemd/terraform-enterprise.kube
     content: |
       [Install]
@@ -104,21 +101,16 @@ write_files:
       Restart=always
       [Kube]
       Yaml=deployment.yml
-
 runcmd:
   - systemctl enable --now podman.socket
   - mkdir -p ${tfe_host_path_to_certificates}
   - mkdir -p ${tfe_host_path_to_data}
-  
 # Pull and run Certbot container to generate TLS certificates
   - podman pull docker.io/certbot/certbot:latest
   - podman run --rm -it -p 80:80 -v "${tfe_host_path_to_certificates}:/etc/letsencrypt/archive/${tfe_hostname}:Z" certbot/certbot certonly --standalone --non-interactive --agree-tos --register-unsafely-without-email --preferred-challenges http -d "${tfe_hostname}"
-
-
 # Log in to Terraform Enterprise container image registry and pull the image
   - echo "${tfe_license}" | podman login --username terraform images.releases.hashicorp.com --password-stdin
   - podman pull images.releases.hashicorp.com/hashicorp/terraform-enterprise:${tfe_version_image}
-
 # Reload systemd daemon and start the Terraform Enterprise service
   - systemctl daemon-reload
   - sleep 10
