@@ -18,3 +18,8 @@ output "aws_region" {
 output "start_aws_ssm_session" {
   value = "aws ssm start-session --target ${aws_instance.tfe_instance.id} --region ${var.aws_region}"
 }
+
+output "TFE_user_username" {
+  value = "${var.admin_username}"
+}
+
