@@ -11,7 +11,7 @@ Follow the steps and an EC2 instance will be created, with proper DNS entries an
 
 - AWS IAM user with permissions to use AWS EC2 and AWS Route53
 
-- [AWS cli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and [AWS SSM plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html) installed and configured on your computer 
+- [AWS cli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and [AWS SSM plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html) installed and configured on your computer
 
 - A DNS zone hosted on AWS Route53
 

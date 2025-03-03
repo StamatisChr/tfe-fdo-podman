@@ -155,10 +155,7 @@ runcmd:
   - sleep 10
   - systemctl start terraform-enterprise.service
   - sleep 30
-
-# Pull terraform docker image
-  - podman pull docker.io/hashicorp/terraform:1.11
-
+  
 # Wait TFE to start  
   - while [ "$(curl -fsS https://${tfe_hostname}/_health_check)" != "OK" ]; do echo "$(date +"%Y-%m-%d %H:%M:%S") Waiting TFE to start..."; sleep 20; done
 
@@ -169,6 +166,8 @@ runcmd:
   - |
     ADMIN_API_TOKEN=$(curl --header "Content-Type: application/json" --request POST --data @${tfe_host_path_to_scripts}/payload.json "https://${tfe_hostname}/admin/initial-admin-user?token=$IACT_TOKEN"  | jq -r '.token' )
 
+# Pull terraform docker image
+  - podman pull docker.io/hashicorp/terraform:1.11
 # Run terraform with admin user api token to create resources in TFE (org and workspace)
   - podman run --rm -e TF_VAR_admin_token=$${ADMIN_API_TOKEN} -v ${tfe_host_path_to_scripts}:/workspace:z -w /workspace hashicorp/terraform:1.11 init
   - podman run --rm -e TF_VAR_admin_token=$${ADMIN_API_TOKEN} -v ${tfe_host_path_to_scripts}:/workspace:z -w /workspace hashicorp/terraform:1.11 apply -auto-approve
