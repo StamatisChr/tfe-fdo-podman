@@ -22,3 +22,6 @@ data "aws_route53_zone" "my_aws_dns_zone" {
 
 }
 
+data "aws_iam_policy" "SecurityComputeAccess" {
+  name = "SecurityComputeAccess"
+}

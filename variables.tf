@@ -8,11 +8,6 @@ variable "tfe_instance_type" {
   type        = string
 }
 
-variable "my_key_name" {
-  description = "The name of the ssh key pair"
-  type        = string
-}
-
 variable "hosted_zone_name" {
   description = "The zone ID of my doormat hosted route53 zone"
   type        = string
@@ -62,6 +57,12 @@ variable "tfe_host_path_to_data" {
   default     = "/var/lib/terraform-enterprise/data"
 }
 
+variable "tfe_host_path_to_scripts" {
+  description = "The path on the host machine to store tfe data"
+  type        = string
+  default     = "/var/lib/terraform-enterprise/scripts"
+}
+
 variable "lets_encrypt_cert" {
   description = "value"
   type        = string
@@ -74,3 +75,24 @@ variable "lets_encrypt_key" {
   type        = string
   default     = "privkey1.pem"
 }
+
+## Variables for TFE configuration: 
+variable "org_name" {
+  type    = string
+  default = "myorg"
+}
+variable "workspace_name" {
+  type    = string
+  default = "myworkspace"
+}
+variable "admin_email" {
+  type    = string
+  default = "admin@example.com"
+}
+
+variable "admin_username" {
+  type    = string
+  default = "admin"
+
+}
+variable "admin_password" {}
