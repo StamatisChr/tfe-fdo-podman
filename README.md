@@ -4,6 +4,7 @@
 
 This guide is to have Terraform Enterprise running with Podman on disk mode.
 Follow the steps and an EC2 instance will be created, with proper DNS entries and security group, TFE will be installed and once TFE is installed an admin user, a TFE organization and a TFE workspace will be created for you.
+The scope of this guide is to be used as an example, it should not be used as is for production purposes.
 
 ## Prerequisites
 
@@ -66,10 +67,6 @@ vim variables.auto.tfvars
 # do not change the variable names on the left column
 # replace only the values in the "< >" placeholders
 
-# example tfvars file
-# do not change the variable names on the left column
-# replace only the values in the "< >" placeholders
-
 aws_region                    = "<aws_region>"             # Set here your desired AWS region, example: eu-west-1
 tfe_instance_class            = "<aws_ec2_instance_class>" # Set here the EC2 instance class only architecture x86_64 is supported, example: m5.xlarge
 db_instance_class             = "<aws_rds_instance_class>" # Set here the RDS instance class, example:  "db.t3.large"
@@ -78,10 +75,7 @@ tfe_dns_record                = "<tfe_host_record>"        # the host record for
 tfe_license                   = "<tfe_license_string>"     # TFE license string
 tfe_encryption_password       = "<type_a_password>"        # TFE encryption password
 tfe_version_image             = "<tfe_version>"            # desired TFE version, example: v202410-1
-tfe_database_user             = "<type_a_username>"        # TFE database user for the external database
-tfe_database_name             = "<type_a_database_name>"   # The database name that TFE will use
-tfe_database_password         = "<type_a_password>"        # The password for the external TFE database
-admin_password                = "<type_a_passwor>"          # The password of the TFE Admin user
+admin_password                = "<type_a_password>"        # The password of the TFE Admin user
 
 ```
 
@@ -131,7 +125,7 @@ tfe-podman-fqdn = "https://tfe-podman-cat.stamatios-chrysinas.sbx.hashidemos.io"
 Wait about 7-8 minutes for Terraform Enterprise to initialize.
 
 Visit the tfe-podman-fqdn from the output.
-To log in, use "admin" as username and the password you set for `admin_password`  as password
+To log in, use `admin` as username and the password you set for `admin_password`  as password
 
 ## Clean up
 
