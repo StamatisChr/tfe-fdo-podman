@@ -89,7 +89,7 @@ write_files:
             type: "Directory"
           name: "data"
         - hostPath:
-            path: "/var/run/docker.sock"
+            path: "/run/podman/podman.sock"
             type: "File"
           name: "docker-sock"
         - name: "terraform-enterprise_terraform-enterprise-cache-pvc"

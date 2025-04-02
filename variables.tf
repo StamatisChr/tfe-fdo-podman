@@ -4,7 +4,7 @@ variable "aws_region" {
 }
 
 variable "tfe_instance_type" {
-  description = "The ec2 instance typr for TFE"
+  description = "The ec2 instance type for TFE"
   type        = string
 }
 

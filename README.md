@@ -18,7 +18,7 @@ The scope of this guide is to be used as an example, it should not be used as is
 
 - Terraform Enterprise FDO license
 
-- Git installed and configured on your computer
+- Git installed on your computer
 
 - Terraform installed on your computer
 
