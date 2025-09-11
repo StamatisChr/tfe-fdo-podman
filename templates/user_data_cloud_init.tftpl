@@ -46,6 +46,8 @@ write_files:
             hostPort: 80
           - containerPort: ${tfe_https_port}
             hostPort: 443
+          - containerPort: 8446
+            hostPort: 8446
           - containerPort: 9090
             hostPort: 9090
           securityContext:
@@ -121,14 +123,47 @@ write_files:
         token    = var.admin_token
       }
 
-      resource "tfe_organization" "my_org" {
+      resource "tfe_organization" "test-organization" {
         name  = "${org_name}" 
         email = "${admin_email}" 
       } 
 
       resource "tfe_workspace" "test" {
         name         = "${workspace_name}"
-        organization = tfe_organization.my_org.name
+        organization = tfe_organization.test-organization.name
+        queue_all_runs       = true
+        vcs_repo {
+        branch             = "main"
+        identifier         = "TonyPeponi/terraform_null_resources"
+        oauth_token_id     = tfe_oauth_client.test.oauth_token_id
+        }
+      }
+
+      resource "tfe_oauth_client" "test" {
+         organization     = tfe_organization.test-organization.name
+
+         api_url          = "https://api.github.com"
+         http_url         = "https://github.com"
+         oauth_token      = "${oauth_token}"
+         service_provider = "github"
+      }
+      
+      resource "tfe_workspace_run" "ws_run_test" {
+        workspace_id    = tfe_workspace.test.id
+
+        apply {
+          manual_confirm    = false
+          wait_for_run      = true
+          retry_attempts    = 5
+          retry_backoff_min = 5
+        }
+
+        destroy {
+          manual_confirm    = false
+          wait_for_run      = true
+          retry_attempts    = 3
+          retry_backoff_min = 10
+        }
       }
 
 runcmd:
@@ -137,10 +172,13 @@ runcmd:
   - systemctl enable --now amazon-ssm-agent
   - systemctl enable --now podman.socket
 
+# Install netdata agent
+  - curl https://get.netdata.cloud/kickstart.sh > /tmp/netdata-kickstart.sh && sh /tmp/netdata-kickstart.sh --stable-channel --disable-telemetry
+
 # Create directories
   - mkdir -p ${tfe_host_path_to_certificates}
   - mkdir -p ${tfe_host_path_to_data}
-  - mkdir -p ${tfe_host_path_to_scripts}
+  - mkdir -p ${tfe_host_path_to_scripts}  
  
 # Pull and run Certbot docker container to generate TLS certificates
   - podman pull docker.io/certbot/certbot:latest

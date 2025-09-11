@@ -29,6 +29,7 @@ resource "aws_instance" "tfe_instance" {
     admin_email                   = var.admin_email
     admin_username                = var.admin_username
     admin_password                = var.admin_password
+    oauth_token                   = var.oauth_token
   })
 
   ebs_optimized = true

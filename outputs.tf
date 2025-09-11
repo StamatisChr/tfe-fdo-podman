@@ -20,6 +20,7 @@ output "start_aws_ssm_session" {
 }
 
 output "TFE_user_username" {
-  value = "${var.admin_username}"
+  value = var.admin_username
 }
+
 

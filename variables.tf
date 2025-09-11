@@ -96,3 +96,8 @@ variable "admin_username" {
 
 }
 variable "admin_password" {}
+
+variable "oauth_token" {
+  description = "OAuth token for GitHub"
+  type        = string
+}
