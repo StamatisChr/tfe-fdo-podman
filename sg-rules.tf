@@ -30,7 +30,7 @@ resource "aws_vpc_security_group_ingress_rule" "port_8446_admin_https" {
 }
 
 # Netdata monitoring port
-resource "aws_vpc_security_group_egress_rule" "port_19999_netdata" {
+resource "aws_vpc_security_group_ingress_rule" "port_19999_netdata" {
   security_group_id = aws_security_group.tfe_podman_sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 19999
