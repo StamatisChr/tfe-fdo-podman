@@ -58,7 +58,7 @@ resource "aws_route53_record" "tfe-a-record" {
 }
 
 resource "aws_iam_role" "tfe_ssm_access" {
-  name = "tfe_ssm_access"
+  name = "tfe_ssm_access-${random_pet.hostname_suffix.id}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -75,7 +75,7 @@ resource "aws_iam_role" "tfe_ssm_access" {
 }
 
 resource "aws_iam_instance_profile" "tfe_ssm_access" {
-  name = "tfe_ssm_access_profile"
+  name = "tfe_ssm_access_profile-${random_pet.hostname_suffix.id}"
   role = aws_iam_role.tfe_ssm_access.name
 }
 
